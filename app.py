@@ -21,6 +21,16 @@ import logging
 logging.basicConfig(level=logging.WARN)
 logger = logging.getLogger(__name__)
 
+import dagshub
+remote_server_uri="https://dagshub.com/JagadishwerPasunoori/mlflowexperiments.mlflow"
+mlflow.set_tracking_uri(remote_server_uri)
+
+dagshub.init(repo_owner='JagadishwerPasunoori', repo_name='mlflowexperiments', mlflow=True)
+import mlflow
+
+with mlflow.start_run():
+    mlflow.log_param('parameter_name', 'value')
+    mlflow.log_metric('metric_name', 1)
 
 def eval_metrics(actual, pred):
     rmse = np.sqrt(mean_squared_error(actual, pred))
@@ -88,3 +98,10 @@ if __name__ == "__main__":
             mlflow.sklearn.log_model(lr, "model", registered_model_name="ElasticnetWineModel")
         else:
             mlflow.sklearn.log_model(lr, "model")
+
+
+
+
+
+
+
